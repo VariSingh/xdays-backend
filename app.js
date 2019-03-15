@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 //Set up default mongoose connection
-var mongoDB = 'mongodb://127.0.0.1/my_database';
+var mongoDB = 'mongodb://127.0.0.1/xdays';
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 
 var routes = require('./routes/index');
