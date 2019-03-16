@@ -5,32 +5,21 @@ var router = express.Router();
 // var challengeRoutes = require('./challenge');
 // var dayRoutes = require('./day');
 const challengeController = require('../controllers/challenge.controller');
+const dayController = require('../controllers/day.controller');
 
 router.get('/user',function(req, res, next) {
   res.send('user');
 });
 
 router.get('/challenge',(req,res,next) => challengeController.findAll(req,res,next));
+router.post('/challenge',(req, res, next) => challengeController.save(req,res,next));
+router.delete('/challenge/:challengeId',(req, res, next) => challengeController.delete(req,res,next));
+router.put('/challenge/:challengeId',(req, res, next) => res.send('update challenge'));
 
-router.post('/challenge',function(req, res, next) {
-  res.send('challenge');
-});
 
-router.put('/challenge',function(req, res, next) {
-  res.send('challenge');
-});
-
-router.get('/day',function(req, res, next) {
-  res.send('day');
-});
-
-router.post('/day',function(req, res, next) {
-  res.send('day');
-});
-
-router.put('/day',function(req, res, next) {
-  res.send('day');
-});
+router.get('/challenge/:challengeId/days',(req,res,next) => dayController.findAll(req,res,next));
+router.post('/challenge/:challengeId/days',(req,res,next) => dayController.save(req,res,next));
+router.put('/day/:dayId',(req,res,next) => dayController.update(req,res,next));
 
 
 /* GET home page. */

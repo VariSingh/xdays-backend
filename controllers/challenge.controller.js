@@ -14,19 +14,22 @@ exports.findAll = (req, res, next) => {
 };
 
 
-// Retrieve and return all Challenges from the database.
+// Save challenge details in database
 exports.save = (req, res, next) => {
 
+    
     let data = {
-        name:"Test Challenge",
-        description:"Some test challenge",
-        start_date:new Date(),
-        number_of_days:15,
-        status:"pending",
-        penality:"I will try again"
+        name:req.body.name,
+        description: req.body.description,
+        start_date:req.body.start_date,
+        number_of_days:req.body.number_of_days,
+        status:req.body.status,
+        penality:req.body.penality
     }
 
-    Challenge.save(data,(error,result)=>{
+    challenge = new Challenge(data);
+
+    challenge.save(data,(error,result)=>{
         if(error){
             res.status(400).send(error);
         }else{
@@ -34,4 +37,17 @@ exports.save = (req, res, next) => {
         }
         
     })
+};
+
+
+
+// Delete challenge
+exports.delete = (req, res, next) => {
+    Challenge.remove({_id:req.params.challengeId},(error,result)=>{
+        if(error){
+            res.status(400).send(error);
+        }else{
+            res.status(200).send(result);
+        }   
+     })
 };
