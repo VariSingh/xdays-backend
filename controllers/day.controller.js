@@ -62,7 +62,7 @@ exports.save = (req, res, next) => {
 exports.update = (req, res, next) => {
 
 
-    Day.findOneAndUpdate({ "_id": req.params.dayId }, { "description": req.body.description },{new:true}, (error, result) => {
+    Day.findOneAndUpdate({ "_id": req.params.dayId }, { "description": req.body.description }, { new: true }, (error, result) => {
         if (error) {
             res.status(400).send(error);
         } else {

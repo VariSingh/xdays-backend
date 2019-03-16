@@ -21,7 +21,7 @@ router.get('/challenge/:challengeId/days',(req,res,next) => dayController.findAl
 router.post('/challenge/:challengeId/days',(req,res,next) => dayController.save(req,res,next));
 router.put('/day/:dayId',(req,res,next) => dayController.update(req,res,next));
 
-
+router.post('/sendemail',(req,res,next) => challengeController.sendEmail(req,res,next));
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
