@@ -3,6 +3,10 @@ const Email = require('../utils/emails');
 
 
 
+
+
+
+
 // Retrieve and return all Challenges from the database.
 exports.findAll = (req, res, next) => {
     Challenge.find({}, (error, result) => {
