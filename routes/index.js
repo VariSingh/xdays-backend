@@ -13,6 +13,7 @@ const dayController = require('../controllers/day.controller');
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
+var token = null;
 async function checkGoogle(profile) {
 
   User.findOne({ googleId: profile.id },
@@ -54,6 +55,9 @@ passport.use(new GoogleStrategy({
   async (request, accessToken, refreshToken, profile, cb) => {
 
     const user = await checkGoogle(profile);
+    
+    token = profile.id;
+    console.log("token------------------------- ",token);
     // check if user already exists in our own db
     return cb(null, profile);
 
@@ -93,10 +97,13 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] 
 
 router.get('/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: '/',
+   // successRedirect: `${config.host}/mychallenges?token=${token}`,
     failureRedirect: '/auth/google',
     session: false
-  }));
+  }),(req,res)=>{
+    console.log(res);
+    res.redirect(`${config.host}/auth?token=${token}`);
+  });
 
 
 
