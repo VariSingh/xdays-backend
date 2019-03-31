@@ -6,7 +6,7 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-
+const cors = require('cors');
 
 
 //Set up default mongoose connection
@@ -18,6 +18,7 @@ var routes = require('./routes/index');
 
 var app = express();
 app.use(passport.initialize());
+app.use(cors());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
