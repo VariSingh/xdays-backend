@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 
 
 
@@ -16,7 +17,7 @@ var routes = require('./routes/index');
 //var usersRouter = require('./routes/users');
 
 var app = express();
-
+app.use(passport.initialize());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
