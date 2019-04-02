@@ -29,7 +29,7 @@ exports.save = (req, res, next) => {
         description: req.body.description,
         start_date: req.body.start_date,
         number_of_days: req.body.number_of_days,
-        status: req.body.status,
+        status: 'pending',
         penality: req.body.penality
     }
 
