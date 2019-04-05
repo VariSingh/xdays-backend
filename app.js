@@ -7,10 +7,9 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const cors = require('cors');
-const config = require('./config/config');
 
 //Set up default mongoose connection
-var mongoDB = config.mongodbURL;
+var mongoDB = 'mongodb://127.0.0.1/xdays';
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 
 var routes = require('./routes/index');
