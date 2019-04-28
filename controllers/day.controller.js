@@ -33,6 +33,7 @@ exports.findAll = (req, res, next) => {
 exports.save = (req, res, next) => {
 
 
+
     Challenge.findOne({ '_id': req.params.challengeId }, (error, challenge) => {
         if (!challenge) {
             res.status(200).send("Challenge not found");
@@ -93,7 +94,19 @@ exports.save = (req, res, next) => {
 
 };
 
-
+// findChallenge = async () =>{
+//     return new Promise((resolve, reject) => {
+//         //query if success then resolve(result)
+//         //else reject with reject(error)
+//         module.find().exec(error, result){
+//         if(error){
+//             reject(error);
+//         }else{
+//             resolve(result);
+//         }
+//         })
+//     })
+// }
 
 // Update day
 exports.update = (req, res, next) => {

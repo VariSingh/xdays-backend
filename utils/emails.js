@@ -16,7 +16,7 @@ let transporter = nodemailer.createTransport({
 const mailOptions = {
 from: config.email,
 to: config.to,
-subject: 'Xdays says Hi',
+subject: 'New Challenge created',
 text: 'Hello World! This is a test message from Xdays. We are excited to tell you that we are working on something awesome.'
 };
 
