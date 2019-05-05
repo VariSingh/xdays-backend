@@ -4,6 +4,7 @@ const passport = require('passport');
 const config = require('../config/config');
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
+const isAuthenticated  = require('../utils/auth')
 
 // var userRoutes = require('./user');
 // var challengeRoutes = require('./challenge');
@@ -49,14 +50,15 @@ async function checkGoogle(profile) {
 passport.use(new GoogleStrategy({
   clientID: config.GOOGLE_CLIENT_ID,
   clientSecret: config.GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:3000/auth/google/callback",
+  callbackURL: `${config.api_url}/auth/google/callback`,
   passReqToCallback: true
 },
   async (request, accessToken, refreshToken, profile, cb) => {
 
     const user = await checkGoogle(profile);
-    
-    token = profile.id;
+    token = jwt.sign({ profileId: profile.id }, config.jwt_secret);
+
+    // token = profile.id;
     console.log("token------------------------- ",token);
     // check if user already exists in our own db
     return cb(null, profile);
@@ -78,17 +80,17 @@ router.get('/user', function (req, res, next) {
   res.send('user');
 });
 
-router.get('/challenge', (req, res, next) => challengeController.findAll(req, res, next));
-router.post('/challenge', (req, res, next) => challengeController.save(req, res, next));
-router.delete('/challenge/:challengeId', (req, res, next) => challengeController.delete(req, res, next));
-router.put('/challenge/:challengeId', (req, res, next) => res.send('update challenge'));
+router.get('/challenge',isAuthenticated, (req, res, next) => challengeController.findAll(req, res, next));
+router.post('/challenge',isAuthenticated, (req, res, next) => challengeController.save(req, res, next));
+router.delete('/challenge/:challengeId',isAuthenticated, (req, res, next) => challengeController.delete(req, res, next));
+router.put('/challenge/:challengeId',isAuthenticated, (req, res, next) => res.send('update challenge'));
 
 
-router.get('/challenge/:challengeId/days', (req, res, next) => dayController.findAll(req, res, next));
-router.post('/challenge/:challengeId/days', (req, res, next) => dayController.save(req, res, next));
-router.put('/day/:dayId', (req, res, next) => dayController.update(req, res, next));
+router.get('/challenge/:challengeId/days',isAuthenticated, (req, res, next) => dayController.findAll(req, res, next));
+router.post('/challenge/:challengeId/days',isAuthenticated, (req, res, next) => dayController.save(req, res, next));
+router.put('/day/:dayId',isAuthenticated, (req, res, next) => dayController.update(req, res, next));
 
-router.post('/sendemail', (req, res, next) => challengeController.sendEmail(req, res, next));
+router.post('/sendemail',isAuthenticated, (req, res, next) => challengeController.sendEmail(req, res, next));
 /* GET home page. */
 
 
@@ -101,7 +103,7 @@ router.get('/auth/google/callback',
     failureRedirect: '/auth/google',
     session: false
   }),(req,res)=>{
-    console.log(res);
+   // console.log(res);
     res.redirect(`${config.host}/auth?token=${token}`);
   });
 
@@ -109,10 +111,8 @@ router.get('/auth/google/callback',
 
 
 
-router.get('/', function (req, res, next) {
-  //console.log(req.params);
-  //console.log(req.body);
-  res.render('index', { title: 'Express' });
-});
+// router.get('/', function (req, res, next) {
+//   res.render('index', { title: 'Express' });
+// });
 
 module.exports = router;

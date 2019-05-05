@@ -8,7 +8,8 @@ let ChallengeSchema = new Schema({
     number_of_days: {type: Number, required: true},
     completed_days:{type: Number, required: true},
     status: {type: String,required: true},
-    penality: {type: String, max: 100,required: true}
+    penality: {type: String, max: 100,required: true},
+    created_by:{type: String, required: true},
 });
 
 

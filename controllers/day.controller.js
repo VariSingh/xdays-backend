@@ -34,7 +34,7 @@ exports.save = (req, res, next) => {
 
 
 
-    Challenge.findOne({ '_id': req.params.challengeId }, (error, challenge) => {
+    Challenge.findOne({ '_id': req.params.challengeId, 'created_by':req.user.profileId }, (error, challenge) => {
         if (!challenge) {
             res.status(200).send("Challenge not found");
         } else {

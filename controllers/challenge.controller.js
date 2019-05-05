@@ -9,7 +9,7 @@ const Email = require('../utils/emails');
 
 // Retrieve and return all Challenges from the database.
 exports.findAll = (req, res, next) => {
-    Challenge.find({}, (error, result) => {
+    Challenge.find({created_by:req.user.profileId}, (error, result) => {
         if (error) {
             res.status(400).send(error);
         } else {
@@ -31,7 +31,8 @@ exports.save = (req, res, next) => {
         number_of_days: req.body.number_of_days,
         completed_days:0,
         status: 'pending',
-        penality: req.body.penality
+        penality: req.body.penality,
+        created_by: req.user.profileId
     }
 
     challenge = new Challenge(data);
