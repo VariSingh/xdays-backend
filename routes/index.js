@@ -104,7 +104,7 @@ router.get('/auth/google/callback',
     session: false
   }),(req,res)=>{
    // console.log(res);
-    res.redirect(`${config.host}/auth?token=${token}`);
+    res.redirect(`${config.host}/#/auth?token=${token}`);
   });
 
 
